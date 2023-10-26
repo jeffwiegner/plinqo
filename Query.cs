@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
-public class plinqo : IEnumerable<object>
+public class PsLinqGo : IEnumerable<object>
 {
     private readonly IEnumerable<object> _psobjects;
-    public plinqo(IEnumerable<object> psobject)
+
+    public PsLinqGo(IEnumerable<object> psobject)
     {
         _psobjects = psobject;
     }
@@ -32,9 +33,9 @@ public class plinqo : IEnumerable<object>
         return _psobjects.Average(x => (decimal)scriptBlock.Invoke(x).First().BaseObject);
     }
 
-    public plinqo Concat(IEnumerable<object> psobjects)
+    public PsLinqGo Concat(IEnumerable<object> psobjects)
     {
-        return new plinqo(_psobjects.Concat(psobjects));
+        return new PsLinqGo(_psobjects.Concat(psobjects));
     }
 
     public bool Contains(object obj)
@@ -47,9 +48,9 @@ public class plinqo : IEnumerable<object>
         return _psobjects.Count();
     }
 
-    public plinqo Distinct()
+    public PsLinqGo Distinct()
     {
-        return new plinqo(_psobjects.Distinct());
+        return new PsLinqGo(_psobjects.Distinct());
     }
 
     public object ElementAt(int index)
@@ -57,9 +58,9 @@ public class plinqo : IEnumerable<object>
         return _psobjects.ElementAt(index);
     }
 
-    public plinqo Except(IEnumerable<object> psobjects)
+    public PsLinqGo Except(IEnumerable<object> psobjects)
     {
-        return new plinqo(_psobjects.Except(psobjects));
+        return new PsLinqGo(_psobjects.Except(psobjects));
     }
 
     public object First()
@@ -92,9 +93,9 @@ public class plinqo : IEnumerable<object>
         return _psobjects.SingleOrDefault();
     }
 
-    public plinqo Skip(int count)
+    public PsLinqGo Skip(int count)
     {
-        return new plinqo(_psobjects.Skip(count));
+        return new PsLinqGo(_psobjects.Skip(count));
     }
 
     public decimal Sum(ScriptBlock scriptBlock)
@@ -102,20 +103,19 @@ public class plinqo : IEnumerable<object>
         return _psobjects.Sum(x => Convert.ToDecimal(scriptBlock.Invoke(x).First().BaseObject));
     }
 
-
-    public plinqo Take(int count)
+    public PsLinqGo Take(int count)
     {
-        return new plinqo(_psobjects.Take(count));
+        return new PsLinqGo(_psobjects.Take(count));
     }
 
-    public plinqo Where(ScriptBlock scriptBlock)
+    public PsLinqGo Where(ScriptBlock scriptBlock)
     {
-        return new plinqo(_psobjects.Where(x => (bool)scriptBlock.Invoke(x).First().BaseObject == true));
+        return new PsLinqGo(_psobjects.Where(x => (bool)scriptBlock.Invoke(x).First().BaseObject == true));
     }
 
-    public plinqo Select(ScriptBlock scriptBlock)
+    public PsLinqGo Select(ScriptBlock scriptBlock)
     {
-        return new plinqo(_psobjects.Select(x => scriptBlock.Invoke(x).First()));
+        return new PsLinqGo(_psobjects.Select(x => scriptBlock.Invoke(x).First()));
     }
 
     IEnumerator IEnumerable.GetEnumerator()
